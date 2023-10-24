@@ -1,4 +1,4 @@
-package entities;
+package br.com.stayease.entities;
 
 import lombok.Getter;
 import lombok.Setter;

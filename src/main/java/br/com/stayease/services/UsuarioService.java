@@ -1,9 +1,9 @@
-package services;
+package br.com.stayease.services;
 
-import entities.Usuario;
+import br.com.stayease.entities.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repositories.UsuarioRepository;
+import br.com.stayease.repositories.UsuarioRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +20,10 @@ public class UsuarioService {
 
     public Usuario findById(Long id){
         return repository.getOne(id);
+    }
+
+    public Usuario findByEmail(String email){
+        return repository.findByEmail(email);
     }
 
     public Usuario create(Usuario usuario){
