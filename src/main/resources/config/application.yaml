@@ -25,8 +25,12 @@ spring:
       pageable:
         default-page-size: 10
         max-page-size: 50
+  flyway:
+    enabled: true
+    schemas: stayeasy
+    locations: classpath:db/common,classpath:db/migration
   datasource:
-    url: jdbc:postgresql://localhost:5432/stayeasy
+    url: jdbc:postgresql://localhost:5433/stayeasy
     username: postgres
     password: postgres
     hikari:
