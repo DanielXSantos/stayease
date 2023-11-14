@@ -36,8 +36,8 @@ public class Usuario {
 
     public Usuario(Long id, String name, LocalDate birthDate, String cpf, String email, String password){
         this.id = id;
-        this.birthDate = birthDate;
         this.name = name;
+        this.birthDate = birthDate;
         this.cpf = cpf;
         this.email = email;
         this.password = password;

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/v1/usuario")
@@ -25,30 +26,34 @@ public class UsuarioController {
     @Transactional
     @PutMapping(value = "/{id}")
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario){
-        Usuario usuarioThatExists = service.findById(id);
+        Optional<Usuario> usuarioThatExists = service.findById(id);
 
-        if(usuarioThatExists == null){
+        if(usuarioThatExists.isPresent()){
             return ResponseEntity.notFound().build();
         }
 
-        usuarioThatExists.setName(usuario.getName());
-        usuarioThatExists.setBirthDate(usuario.getBirthDate());
-        usuarioThatExists.setCpf(usuario.getCpf());
-        usuarioThatExists.setEmail(usuario.getEmail());
-        usuarioThatExists.setPassword(usuario.getPassword());
+        Usuario existingUsuario = usuarioThatExists.get();
 
-        return ResponseEntity.ok(service.update(usuarioThatExists));
+        existingUsuario.setName(usuario.getName());
+        existingUsuario.setBirthDate(usuario.getBirthDate());
+        existingUsuario.setCpf(usuario.getCpf());
+        existingUsuario.setEmail(usuario.getEmail());
+        existingUsuario.setPassword(usuario.getPassword());
+
+        return ResponseEntity.ok(service.update(existingUsuario));
     }
 
-    @GetMapping("/id")
-    public Usuario findById(@RequestParam Long id){
+    @Transactional
+    @GetMapping(value = "/{id}")
+    public Optional<Usuario> findById(@PathVariable Long id){
         return service.findById(id);
     }
 
-    @GetMapping("/email")
-    public Usuario findByEmail(@RequestParam String email){
+    @GetMapping(value = "/email/{email}")
+    public Usuario findByEmail(@PathVariable String email){
         return service.findByEmail(email);
     }
+
 
     @GetMapping
     public List<Usuario> findAll(){

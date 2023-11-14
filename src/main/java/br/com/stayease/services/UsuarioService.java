@@ -18,8 +18,8 @@ public class UsuarioService {
         return repository.findAll();
     }
 
-    public Usuario findById(Long id){
-        return repository.getOne(id);
+    public Optional<Usuario> findById(Long id){
+        return repository.findById(id);
     }
 
     public Usuario findByEmail(String email){
