@@ -16,31 +16,27 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class Usuario {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idGenerator")
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "idGenerator"
+    )
     @GenericGenerator(
             name = "idGenerator",
             strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-            parameters = {
-                    @Parameter(name = SequenceStyleGenerator.CONFIG_PREFER_SEQUENCE_PER_ENTITY, value = "true")
-            }
+            parameters = {@Parameter(
+                    name = "prefer_sequence_per_entity",
+                    value = "true"
+            )}
     )
     private Long id;
+
     private String name;
     private LocalDate birthDate;
     private String cpf;
     private String email;
     private String password;
 
-    public Usuario(){}
-
-    public Usuario(Long id, String name, LocalDate birthDate, String cpf, String email, String password){
-        this.id = id;
-        this.birthDate = birthDate;
-        this.name = name;
-        this.cpf = cpf;
-        this.email = email;
-        this.password = password;
-    }
 
 }
