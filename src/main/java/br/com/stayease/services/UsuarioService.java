@@ -1,9 +1,9 @@
 package br.com.stayease.services;
 
 import br.com.stayease.entities.Usuario;
+import br.com.stayease.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import br.com.stayease.repositories.UsuarioRepository;
 
 import java.util.List;
 import java.util.Optional;
