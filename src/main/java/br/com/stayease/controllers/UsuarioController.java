@@ -14,8 +14,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/v1/usuario")
 public class UsuarioController {
+
     @Autowired
-    private UsuarioService service;
+    UsuarioService service;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -43,7 +44,17 @@ public class UsuarioController {
         return ResponseEntity.ok(service.update(existingUsuario));
     }
 
-    @Transactional
+    @PutMapping(value = "/teste/{id}")
+    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
+        Usuario usuarioAtualizado = service.update(id, usuario);
+
+        if (usuarioAtualizado == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(usuarioAtualizado);
+    }
+
     @GetMapping(value = "/{id}")
     public Optional<Usuario> findById(@PathVariable Long id){
         return service.findById(id);
