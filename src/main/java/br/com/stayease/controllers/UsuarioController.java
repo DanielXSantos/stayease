@@ -24,26 +24,9 @@ public class UsuarioController {
         return service.create(usuario);
     }
 
+
+
     @Transactional
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario){
-        Optional<Usuario> usuarioThatExists = service.findById(id);
-
-        if(usuarioThatExists.isPresent()){
-            return ResponseEntity.notFound().build();
-        }
-
-        Usuario existingUsuario = usuarioThatExists.get();
-
-        existingUsuario.setName(usuario.getName());
-        existingUsuario.setBirthDate(usuario.getBirthDate());
-        existingUsuario.setCpf(usuario.getCpf());
-        existingUsuario.setEmail(usuario.getEmail());
-        existingUsuario.setPassword(usuario.getPassword());
-
-        return ResponseEntity.ok(service.update(existingUsuario));
-    }
-
     @PutMapping(value = "/teste/{id}")
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
         Usuario usuarioAtualizado = service.update(id, usuario);
@@ -55,16 +38,15 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioAtualizado);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public Optional<Usuario> findById(@PathVariable Long id){
         return service.findById(id);
     }
 
-    @GetMapping(value = "/email/{email}")
+    @GetMapping("/email/{email}")
     public Usuario findByEmail(@PathVariable String email){
         return service.findByEmail(email);
     }
-
 
     @GetMapping
     public List<Usuario> findAll(){

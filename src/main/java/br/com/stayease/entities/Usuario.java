@@ -38,16 +38,5 @@ public class Usuario {
     private String email;
     private String password;
 
-    public Usuario(){}
-
-    public Usuario(Long id, String name, LocalDate birthDate, String cpf, String email, String password){
-        this.id = id;
-        this.name = name;
-        this.birthDate = birthDate;
-        this.cpf = cpf;
-        this.email = email;
-        this.password = password;
-    }
-
 
 }
