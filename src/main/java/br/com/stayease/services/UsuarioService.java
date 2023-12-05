@@ -1,9 +1,10 @@
 package br.com.stayease.services;
 
 import br.com.stayease.entities.Usuario;
+import br.com.stayease.exceptions.DuplicateObjectException;
+import br.com.stayease.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import br.com.stayease.repositories.UsuarioRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +27,15 @@ public class UsuarioService {
         return repository.findByEmail(email);
     }
 
-    public Usuario create(Usuario usuario){
-        return repository.save(usuario);
+    public Usuario create(Usuario usuario) {
+        if(repository.findByEmail(usuario.getEmail()).equals(true)){
+            throw new DuplicateObjectException("Já existe um usuário com o e-mail informado!");
+        }else if(repository.findByCpf(usuario.getCpf()).equals(true)){
+            throw new DuplicateObjectException("Já existe um usuário com o CPF informado!");
+        }else {
+            return repository.save(usuario);
+        }
+
     }
 
     public Usuario update(Usuario usuarioAtualizado) {
