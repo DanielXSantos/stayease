@@ -28,14 +28,13 @@ public class UsuarioService {
     }
 
     public Usuario create(Usuario usuario) {
-        if(repository.findByEmail(usuario.getEmail()).equals(true)){
+        if(repository.existsByEmail(usuario.getEmail())){
             throw new DuplicateObjectException("Já existe um usuário com o e-mail informado!");
-        }else if(repository.findByCpf(usuario.getCpf()).equals(true)){
-            throw new DuplicateObjectException("Já existe um usuário com o CPF informado!");
-        }else {
-            return repository.save(usuario);
         }
-
+        if(repository.existsByCpf(usuario.getCpf())){
+            throw new DuplicateObjectException("Já existe um usuário com o CPF informado!");
+        }
+        return repository.save(usuario);
     }
 
     public Usuario update(Usuario usuarioAtualizado) {
