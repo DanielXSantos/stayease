@@ -14,8 +14,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/v1/usuario")
 public class UsuarioController {
+
     @Autowired
-    private UsuarioService service;
+    UsuarioService service;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -23,33 +24,28 @@ public class UsuarioController {
         return service.create(usuario);
     }
 
-    @Transactional
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario){
-        Optional<Usuario> usuarioThatExists = service.findById(id);
 
-        if(usuarioThatExists.isPresent()){
+
+    @Transactional
+
+    @PutMapping(value = "/teste/{id}")
+    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
+        Usuario usuarioAtualizado = service.update(id, usuario);
+
+        if (usuarioAtualizado == null) {
             return ResponseEntity.notFound().build();
         }
 
-        Usuario existingUsuario = usuarioThatExists.get();
-
-        existingUsuario.setName(usuario.getName());
-        existingUsuario.setBirthDate(usuario.getBirthDate());
-        existingUsuario.setCpf(usuario.getCpf());
-        existingUsuario.setEmail(usuario.getEmail());
-        existingUsuario.setPassword(usuario.getPassword());
-
-        return ResponseEntity.ok(service.update(existingUsuario));
+        return ResponseEntity.ok(usuarioAtualizado);
     }
 
-    @Transactional
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public Optional<Usuario> findById(@PathVariable Long id){
         return service.findById(id);
     }
 
-    @GetMapping(value = "/email/{email}")
+
+    @GetMapping("/email/{email}")
     public Usuario findByEmail(@PathVariable String email){
         return service.findByEmail(email);
     }
