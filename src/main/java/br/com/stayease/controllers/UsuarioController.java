@@ -27,6 +27,7 @@ public class UsuarioController {
 
 
     @Transactional
+
     @PutMapping(value = "/teste/{id}")
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
         Usuario usuarioAtualizado = service.update(id, usuario);
@@ -43,10 +44,12 @@ public class UsuarioController {
         return service.findById(id);
     }
 
+
     @GetMapping("/email/{email}")
     public Usuario findByEmail(@PathVariable String email){
         return service.findByEmail(email);
     }
+
 
     @GetMapping
     public List<Usuario> findAll(){
