@@ -2,7 +2,7 @@ package br.com.stayease.controllers;
 
 import br.com.stayease.dto.UsuarioDto;
 import br.com.stayease.entities.Usuario;
-import br.com.stayease.exception.DefaltException;
+import br.com.stayease.exception.UnsupportedException;
 import br.com.stayease.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,29 +34,21 @@ public class UsuarioController {
         if (usuarioAtualizado == null) {
             return ResponseEntity.notFound().build();
         }
-
         return ResponseEntity.ok(usuarioAtualizado);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDto> findById(@PathVariable Long id) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
-        } catch (DefaltException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
     }
 
 
 
     @GetMapping("/email/{email}")
     public ResponseEntity<UsuarioDto> findByEmail (@PathVariable String email) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(service.findByEmail(email));
-        } catch (DefaltException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(service.findByEmail(email));
     }
+
 
     @GetMapping
     public List<UsuarioDto> findAll() {
