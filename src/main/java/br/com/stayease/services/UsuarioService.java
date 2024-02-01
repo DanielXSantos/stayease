@@ -4,9 +4,10 @@ import br.com.stayease.dto.UsuarioDto;
 import br.com.stayease.entities.Usuario;
 import br.com.stayease.exception.UnsupportedException;
 import br.com.stayease.mapper.UsuarioMapper;
+import br.com.stayease.exceptions.DuplicateObjectException;
+import br.com.stayease.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import br.com.stayease.repositories.UsuarioRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +55,6 @@ public class UsuarioService {
 //        return repository.save(usuario);
 //    }
 
-
     public Usuario create(UsuarioDto usuarioDto) {
         Usuario usuario = usuarioMapper.toEntity(usuarioDto);
         // Verificar se o email já está cadastrado
@@ -65,9 +65,6 @@ public class UsuarioService {
         if (repository.existsByCpf(usuario.getCpf())) {
             throw new UnsupportedException("CPF já cadastrado");
         }
-
-        // Se tudo estiver OK, salvar o usuário
-        return repository.save(usuario);
     }
 
     public Usuario update(Long id, Usuario usuarioAtualizado) {

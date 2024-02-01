@@ -25,8 +25,8 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(usuarioDto));
     }
 
-
     @Transactional
+
     @PutMapping(value = "/teste/{id}")
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
         Usuario usuarioAtualizado = service.update(id, usuario);
@@ -42,13 +42,10 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
     }
 
-
-
     @GetMapping("/email/{email}")
     public ResponseEntity<UsuarioDto> findByEmail (@PathVariable String email) {
         return ResponseEntity.status(HttpStatus.OK).body(service.findByEmail(email));
     }
-
 
     @GetMapping
     public List<UsuarioDto> findAll() {
