@@ -11,11 +11,11 @@ import java.time.LocalDate;
 @Setter
 public class UsuarioDto {
 
-    private Long id;
+    //private Long id;
     private String name;
     private LocalDate birthDate;
     private String cpf;
     private String email;
-    private String password;
+    //private String password;
 
 }

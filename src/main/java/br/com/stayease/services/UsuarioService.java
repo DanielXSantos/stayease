@@ -65,6 +65,7 @@ public class UsuarioService {
         if (repository.existsByCpf(usuario.getCpf())) {
             throw new UnsupportedException("CPF já cadastrado");
         }
+        return repository.save(usuario);
     }
 
     public Usuario update(Long id, Usuario usuarioAtualizado) {
@@ -100,6 +101,10 @@ public class UsuarioService {
         return repository.save(usuarioExistente);
     }
     public void delete(Long id) {
+        Optional<Usuario> usuarioEntity = repository.findById(id);
+        if (usuarioEntity.isEmpty()){
+            throw new UnsupportedException("Usuria do id " + id +" não foi achado para deleção");
+        }
         repository.deleteById(id);
     }
 
