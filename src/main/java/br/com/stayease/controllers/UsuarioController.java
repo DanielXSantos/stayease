@@ -1,6 +1,8 @@
 package br.com.stayease.controllers;
 
+import br.com.stayease.dto.UsuarioDto;
 import br.com.stayease.entities.Usuario;
+import br.com.stayease.exception.UnsupportedException;
 import br.com.stayease.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/v1/usuario")
@@ -19,12 +21,9 @@ public class UsuarioController {
     UsuarioService service;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Usuario create(@RequestBody Usuario usuario){
-        return service.create(usuario);
+    public ResponseEntity<Usuario> save(@RequestBody @Valid UsuarioDto usuarioDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(usuarioDto));
     }
-
-
 
     @Transactional
 
@@ -35,29 +34,26 @@ public class UsuarioController {
         if (usuarioAtualizado == null) {
             return ResponseEntity.notFound().build();
         }
-
         return ResponseEntity.ok(usuarioAtualizado);
     }
 
     @GetMapping("/{id}")
-    public Optional<Usuario> findById(@PathVariable Long id){
-        return service.findById(id);
+    public ResponseEntity<UsuarioDto> findById(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
     }
-
 
     @GetMapping("/email/{email}")
-    public Usuario findByEmail(@PathVariable String email){
-        return service.findByEmail(email);
+    public ResponseEntity<UsuarioDto> findByEmail (@PathVariable String email) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.findByEmail(email));
     }
 
-
     @GetMapping
-    public List<Usuario> findAll(){
+    public List<UsuarioDto> findAll() {
         return service.findAll();
     }
 
-    @DeleteMapping
-    public void delete(@RequestParam Long id){
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
         service.delete(id);
     }
 
