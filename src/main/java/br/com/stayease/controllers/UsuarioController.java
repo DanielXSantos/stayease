@@ -21,7 +21,7 @@ public class UsuarioController {
     UsuarioService service;
 
     @PostMapping
-    public ResponseEntity<Usuario> save(@RequestBody @Valid UsuarioDto usuarioDto){
+    public ResponseEntity<UsuarioDto> save(@RequestBody @Valid UsuarioDto usuarioDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(usuarioDto));
     }
 

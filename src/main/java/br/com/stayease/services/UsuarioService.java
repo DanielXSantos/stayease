@@ -55,7 +55,7 @@ public class UsuarioService {
 //        return repository.save(usuario);
 //    }
 
-    public Usuario create(UsuarioDto usuarioDto) {
+    public UsuarioDto create(UsuarioDto usuarioDto) {
         Usuario usuario = usuarioMapper.toEntity(usuarioDto);
         // Verificar se o email já está cadastrado
         if (repository.existsByEmail(usuario.getEmail())) {
@@ -65,6 +65,7 @@ public class UsuarioService {
         if (repository.existsByCpf(usuario.getCpf())) {
             throw new UnsupportedException("CPF já cadastrado");
         }
+        return usuarioMapper.usuarioDto(repository.save(usuario));
     }
 
     public Usuario update(Long id, Usuario usuarioAtualizado) {
