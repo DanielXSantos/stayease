@@ -1,9 +1,13 @@
 package br.com.stayease.services;
 
+import br.com.stayease.dto.UsuarioDto;
 import br.com.stayease.entities.Usuario;
+import br.com.stayease.exception.UnsupportedException;
+import br.com.stayease.mapper.UsuarioMapper;
+import br.com.stayease.exceptions.DuplicateObjectException;
+import br.com.stayease.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import br.com.stayease.repositories.UsuarioRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,22 +16,32 @@ import java.util.Optional;
 public class UsuarioService {
 
     @Autowired
-    UsuarioRepository repository;
+    private UsuarioRepository repository;
 
-    public UsuarioService(UsuarioRepository repository) {
-        this.repository = repository;
+    @Autowired
+    private UsuarioMapper usuarioMapper;
+
+
+    public List<UsuarioDto> findAll() {
+        return usuarioMapper.toListDto(repository.findAll());
     }
 
-    public List<Usuario> findAll(){
-        return repository.findAll();
+
+    public UsuarioDto findById(Long id) {
+        Optional<Usuario> usuarioEntity = repository.findById(id);
+        if (usuarioEntity.isEmpty()){
+            throw new UnsupportedException("Usuario não existe no cadastro");
+        }
+        return usuarioMapper.usuarioDto(usuarioEntity.get());
     }
 
-    public Optional<Usuario> findById(Long id){
-        return repository.findById(id);
-    }
 
-    public Usuario findByEmail(String email){
-        return repository.findByEmail(email);
+    public UsuarioDto findByEmail(String email) {
+        Usuario byEmail = repository.findByEmail(email);
+        if (byEmail == null) {
+            throw new UnsupportedException("Email não encontrado");
+        }
+        return usuarioMapper.usuarioDto(byEmail); // Corrigido aqui
     }
 
 //    public Usuario create(Usuario usuario) {
@@ -37,8 +51,20 @@ public class UsuarioService {
 //        return repository.save(usuario);
 //    }
 
-    public Usuario create(Usuario usuario) {
-        return repository.save(usuario);
+//    public Usuario create(Usuario usuario) {
+//        return repository.save(usuario);
+//    }
+
+    public Usuario create(UsuarioDto usuarioDto) {
+        Usuario usuario = usuarioMapper.toEntity(usuarioDto);
+        // Verificar se o email já está cadastrado
+        if (repository.existsByEmail(usuario.getEmail())) {
+            throw new UnsupportedException("E-mail já cadastrado");
+        }
+        // Verificar se o CPF já está cadastrado
+        if (repository.existsByCpf(usuario.getCpf())) {
+            throw new UnsupportedException("CPF já cadastrado");
+        }
     }
 
     public Usuario update(Long id, Usuario usuarioAtualizado) {
@@ -73,8 +99,7 @@ public class UsuarioService {
 
         return repository.save(usuarioExistente);
     }
-
-    public void delete(Long id){
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 
