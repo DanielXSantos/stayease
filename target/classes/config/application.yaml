@@ -2,7 +2,7 @@ stayease:
   title: Stay Easy API
   description: API do módulo Stay Easy
   version: 0.0.1-SNAPSHOT
-  endpointsPackage: br.com
+  endpointsPackage: br.com.stayease
 
 server:
   port: 5000
