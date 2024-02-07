@@ -5,11 +5,12 @@ import br.com.stayease.entities.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-06T09:49:29-0300",
+    date = "2024-02-07T09:38:20-0300",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.22 (Amazon.com Inc.)"
 )
 @Component
@@ -29,6 +30,20 @@ public class UsuarioMapperImpl extends UsuarioMapper {
         usuarioDto.setCpf( usuarioEntity.getCpf() );
         usuarioDto.setEmail( usuarioEntity.getEmail() );
         usuarioDto.setPassword( usuarioEntity.getPassword() );
+        usuarioDto.setRole( usuarioEntity.getRole() );
+
+        return usuarioDto;
+    }
+
+    @Override
+    public UsuarioDto userDetailsToDto(UserDetails usuario) {
+        if ( usuario == null ) {
+            return null;
+        }
+
+        UsuarioDto usuarioDto = new UsuarioDto();
+
+        usuarioDto.setPassword( usuario.getPassword() );
 
         return usuarioDto;
     }
@@ -47,6 +62,7 @@ public class UsuarioMapperImpl extends UsuarioMapper {
         usuario.setCpf( dto.getCpf() );
         usuario.setEmail( dto.getEmail() );
         usuario.setPassword( dto.getPassword() );
+        usuario.setRole( dto.getRole() );
 
         return usuario;
     }

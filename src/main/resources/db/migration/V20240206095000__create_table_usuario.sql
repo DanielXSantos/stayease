@@ -1,1 +1,1 @@
-alter table usuario add column role varchar(50) not null;
+alter table usuario add column role int4 not null;

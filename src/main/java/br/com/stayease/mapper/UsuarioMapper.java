@@ -5,6 +5,7 @@ import br.com.stayease.dto.UsuarioDto;
 import br.com.stayease.entities.Usuario;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ import java.util.List;
 public abstract class UsuarioMapper {
 
     public abstract UsuarioDto usuarioDto(Usuario usuarioEntity);
+
+    public abstract UsuarioDto userDetailsToDto(UserDetails usuario);
 
     public abstract Usuario toEntity(UsuarioDto dto);
 

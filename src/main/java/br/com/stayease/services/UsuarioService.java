@@ -7,13 +7,16 @@ import br.com.stayease.mapper.UsuarioMapper;
 import br.com.stayease.exceptions.DuplicateObjectException;
 import br.com.stayease.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService {
 
     @Autowired
     private UsuarioRepository repository;
@@ -37,11 +40,11 @@ public class UsuarioService {
 
 
     public UsuarioDto findByEmail(String email) {
-        Usuario byEmail = repository.findByEmail(email);
+        UserDetails byEmail = repository.findByEmail(email);
         if (byEmail == null) {
             throw new UnsupportedException("Email não encontrado");
         }
-        return usuarioMapper.usuarioDto(byEmail); // Corrigido aqui
+        return usuarioMapper.userDetailsToDto(byEmail); // Corrigido aqui
     }
 
 //    public Usuario create(Usuario usuario) {
@@ -105,4 +108,8 @@ public class UsuarioService {
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return repository.findByEmail(s);
+    }
 }

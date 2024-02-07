@@ -1,5 +1,6 @@
 package br.com.stayease.dto;
 
+import br.com.stayease.entities.UserRole;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,5 +18,5 @@ public class UsuarioDto {
     private String cpf;
     private String email;
     private String password;
-
+    private UserRole role;
 }
