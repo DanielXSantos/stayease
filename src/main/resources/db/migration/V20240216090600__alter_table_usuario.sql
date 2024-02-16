@@ -1,0 +1,1 @@
+alter table usuario alter column password type varchar(255);
