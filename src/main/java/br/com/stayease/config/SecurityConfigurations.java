@@ -61,11 +61,6 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean //criado apenas para parar o erro "Could not autowire. No beans of type "TokenService" found" na classe SecurityFilter
-    public TokenService tokenService(){
-        return new TokenService();
-    }
-
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
