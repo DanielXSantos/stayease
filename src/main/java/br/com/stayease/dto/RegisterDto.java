@@ -1,21 +1,16 @@
 package br.com.stayease.dto;
 
 import br.com.stayease.entities.UserRole;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Getter
-@Setter
-public class UsuarioDto {
-
-    private Long id;
-    private String name;
-    private LocalDate birthDate;
-    private String cpf;
+public class RegisterDto {
     private String email;
     private String password;
     private UserRole role;

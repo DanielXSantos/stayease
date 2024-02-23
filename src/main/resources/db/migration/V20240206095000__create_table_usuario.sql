@@ -1,0 +1,1 @@
+alter table usuario add column role int4 not null;

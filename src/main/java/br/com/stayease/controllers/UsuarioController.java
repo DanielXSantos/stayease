@@ -26,7 +26,6 @@ public class UsuarioController {
     }
 
     @Transactional
-
     @PutMapping(value = "/teste/{id}")
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
         Usuario usuarioAtualizado = service.update(id, usuario);

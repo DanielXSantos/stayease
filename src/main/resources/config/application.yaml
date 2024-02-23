@@ -51,3 +51,7 @@ spring:
       hibernate.temp.use_jdbc_metadata_defaults: false
       hibernate.jdbc.time_zone: UTC
       hibernate.default_schema: stayeasy
+api:
+  security:
+    token:
+      secret: my-secret-key
